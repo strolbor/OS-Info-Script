@@ -8,12 +8,18 @@
 
 * OS
   * The operating system is "CentOS Linux 7 (Core)"
+
+* CPU
   * CPU sockets: 1
   * CPU cores: 2
-  * Uptime: 3 hours, 42 minutes
+  * Uptime: 4 hours, 15 minutes
+  * CPU-load
+    * over the last 1 minute: 0,00
+    * over the last 5 minute: 0,01
+    * over the last 15 minute: 0,05
 
-* RAM
-  * Mem: 228M of 1,8G is used. 
+* RAM-Usage
+  * Mem: 226M of 1,8G is used. 
   * Swap: 0B of 2,0G is used. 
 
 * Filesystem and Mountpoints (V2)
