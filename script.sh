@@ -28,6 +28,5 @@ echo "* RAM"
 echo ""
 
 # Hier sollen die Informationen vom Speicher sei
-echo "* Filesysteme und Mountpoints"
 ./file-table.sh
 
