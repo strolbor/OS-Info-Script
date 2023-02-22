@@ -15,8 +15,7 @@ echo ""
 
 # Hier sollen die Informationen vom Betriebsystem sein
 echo "* OS"
-cat /etc/os-release | grep "NAME" | head -n2 | tail -n1 | awk -F'=' '{print "  * The operating system is " $2}'
-
+./os.sh
  
 echo ""
 
@@ -24,11 +23,11 @@ echo ""
 # Diese Informationen erhalten wir von free -h
 # -h bedeutet "Human readable", also was die Station will
 echo "* RAM"
-free -h | tail -n2 | awk '{print "  * The ram usage of " $1 " is " $3 " from total of " $2}'
+./ram.sh
 
 echo ""
 
 # Hier sollen die Informationen vom Speicher sei
-df -h | head -n1 |awk '{print "* " $0}'
- df -h | sed -e '1d' |awk '{print "  * " $0}'
+echo "* Filesysteme und Mountpoints"
+./file-table.sh
 
