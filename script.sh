@@ -28,8 +28,8 @@ lscpu | grep "CPU(s)" | head -n1 | awk '{print "  * CPU cores: " $2}'
 uptime -p | sed 's/up//g' |awk '{print "  * Uptime:"$0}'
 
 
-top -b -n 1 |head -n1 | awk '{print "  * over the last 1 minute: "$10 }'
-top -b -n 1 |head -n1 | awk '{print "  * over the last 5 minute: "$11 }'
+top -b -n 1 |head -n1 |  awk '{print "  * over the last 1 minute: "$10 }' | sed -e 's/ $//g' | sed -e 's/,$//g'|
+top -b -n 1 |head -n1 | awk '{print "  * over the last 5 minute: "$11 }' | sed -e 's/ $//g' | sed -e 's/,$//g'|
 top -b -n 1 |head -n1 | awk '{print "  * over the last 15 minute: "$12 }'
 
 
