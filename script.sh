@@ -29,7 +29,7 @@ uptime -p | sed 's/up//g' |awk '{print "  * Uptime:"$0}'
 
 echo "  * CPU-load"
 top -b -n 1 -i | head -n1 > top.tmp
-cat top.tmp | awk '{print "    * over the last 1 minute: "$10 }' top.tmp | sed -e 's/ $//g' | sed -e 's/,$//g' | sed -e 's/.$//.'
+cat top.tmp | awk '{print "    * over the last 1 minute: "$10 }' | sed -e 's/ $//g' | sed -e 's/,$//g' 
 cat top.tmp | awk '{print "    * over the last 5 minute: "$11 }' | sed -e 's/ $//g' | sed -e 's/,$//g'
 cat top.tmp | awk '{print "    * over the last 15 minute: "$12 }'
 
