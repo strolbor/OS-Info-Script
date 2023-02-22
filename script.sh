@@ -15,15 +15,26 @@ echo ""
 
 # Hier sollen die Informationen vom Betriebsystem sein
 echo "* OS"
-./os.sh
+
+# OS-Name
+cat /etc/os-release | grep "NAME" | head -n2 | tail -n1 | awk -F'=' '{print "  * The operating system is " $2}'
+
+echo "* CPU"
+# CPU-Anzahl
+lscpu | grep "Socket(s)" | head -n1 | awk '{print "  * CPU sockets: " $2}'
+lscpu | grep "CPU(s)" | head -n1 | awk '{print "  * CPU cores: " $2}'
+uptime -p | sed 's/up//g' |awk '{print "  * Uptime:"$0}'
  
 echo ""
+
 
 # Hier sollen die Informationen vom Arbeitsspeicher sein
 # Diese Informationen erhalten wir von free -h
 # -h bedeutet "Human readable", also was die Station will
-echo "* RAM"
-./ram.sh
+echo "* RAM-Usage"
+
+free -h | tail -n2 | awk '{print "  * "$1 " " $3 " of " $2 " is used. " }'
+# '{print "  * The ram usage of " $1 " is " $3 " from total of " $2}'
 
 echo ""
 
