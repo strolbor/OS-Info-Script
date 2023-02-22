@@ -35,12 +35,12 @@ cat top.tmp | awk '{print "    * over the last 15 minute: "$12 }'
 
 #in Prozent
 
-cat top.tmp |head -n1 | awk '{print $10 }' | sed -e 's/ $//g' | sed -e 's/,$//g'  | sed  's/,/./g' | awk '{print "    * over the last 15 minute: " $0*100 "%"}'
+cat top.tmp |head -n1 | awk '{print $10 }' | sed -e 's/ $//g' | sed -e 's/,$//g'  | sed  's/,/./g' | awk '{print "    * over the last 1 minute: " $0*100 "%"}'
 # 1. sed leerzeichen entfernen
 # 2. sed , entfernen
 # 3. sed , durch . ersetzen
 # dann multiplizieren für prozent
-cat top.tmp | awk '{print $11 }' | sed -e 's/ $//g' | sed -e 's/,$//g'  | sed  's/,/./g' | awk '{print "    * over the last 15 minute: " $0*100 "%"}'
+cat top.tmp | awk '{print $11 }' | sed -e 's/ $//g' | sed -e 's/,$//g'  | sed  's/,/./g' | awk '{print "    * over the last 5 minute: " $0*100 "%"}'
 cat top.tmp | awk '{print $12 }' | sed -e 's/ $//g' | sed -e 's/,$//g'  | sed  's/,/./g' | awk '{print "    * over the last 15 minute: " $0*100 "%"}'
 rm -f top.tmp
 
