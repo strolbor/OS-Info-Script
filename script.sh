@@ -18,7 +18,10 @@ echo "* OS"
 
 # OS-Name
 cat /etc/os-release | grep "NAME" | head -n2 | tail -n1 | awk -F'=' '{print "  * The operating system is " $2}'
+cat /etc/os-release | grep "ID" | head -n1 |  awk -F'=' '{print "  * The operating system id is " $2}'
+cat /etc/os-release | grep "VERSION_ID" | head -n1 |  awk -F'=' '{print "  * The operating system version id is " $2}'
 
+# VERSION_ID
 echo ""
 
 echo "* CPU"
