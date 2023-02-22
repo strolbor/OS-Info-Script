@@ -1,0 +1,59 @@
+ _______  _______         ___   __    _  _______  _______ 
+|       ||       |       |   | |  |  | ||       ||       |
+|   _   ||  _____| ____  |   | |   |_| ||    ___||   _   |
+|  | |  || |_____ |____| |   | |       ||   |___ |  | |  |
+|  |_|  ||_____  |       |   | |  _    ||    ___||  |_|  |
+|       | _____| |       |   | | | |   ||   |    |       |
+|_______||_______|       |___| |_|  |__||___|    |_______|
+
+* OS
+  * The operating system is "CentOS Linux 7 (Core)"
+  * CPU sockets: 1
+  * CPU cores: 2
+  * Uptime:  3 hours, 42 minutes
+
+* RAM
+  * Mem: 228M of 1,8G is used. 
+  * Swap: 0B of 2,0G is used. 
+    * 0 of 908M is used by devtmpfs (/dev)
+    * 0 of 919M is used by tmpfs (/dev/shm)
+    * 8,6M of 919M is used by tmpfs (/run)
+    * 0 of 919M is used by tmpfs (/sys/fs/cgroup)
+    * 1,7G of 29G is used by /dev/mapper/centos-root (/)
+    * 181M of 1014M is used by /dev/sda1 (/boot)
+    * 0 of 184M is used by tmpfs (/run/user/1000)
+    * 1,7G of 29G is used by 192.168.0.33:/home (/mnt/nfs/home)
+    * 1,7G of 29G is used by 192.168.0.33:/var/nfs (/mnt/nfs/var/nfs)
+
+* Filesystem and Mountpoints (V2)
+  * Dateisystem             Größe Benutzt Verf. Verw% Eingehängt auf
+  * devtmpfs                 908M       0  908M    0% /dev
+  * tmpfs                    919M       0  919M    0% /dev/shm
+  * tmpfs                    919M    8,6M  911M    1% /run
+  * tmpfs                    919M       0  919M    0% /sys/fs/cgroup
+  * /dev/mapper/centos-root   29G    1,7G   28G    6% /
+  * /dev/sda1               1014M    181M  834M   18% /boot
+  * tmpfs                    184M       0  184M    0% /run/user/1000
+  * 192.168.0.33:/home        29G    1,7G   28G    6% /mnt/nfs/home
+  * 192.168.0.33:/var/nfs     29G    1,7G   28G    6% /mnt/nfs/var/nfs
+* Filesystem (V1)
+  * Mountpoints
+    * /dev
+    * /dev/shm
+    * /run
+    * /sys/fs/cgroup
+    * /
+    * /boot
+    * /run/user/1000
+    * /mnt/nfs/home
+    * /mnt/nfs/var/nfs
+  * Storage usage
+    * 0 of 908M is used by devtmpfs (/dev)
+    * 0 of 919M is used by tmpfs (/dev/shm)
+    * 8,6M of 919M is used by tmpfs (/run)
+    * 0 of 919M is used by tmpfs (/sys/fs/cgroup)
+    * 1,7G of 29G is used by /dev/mapper/centos-root (/)
+    * 181M of 1014M is used by /dev/sda1 (/boot)
+    * 0 of 184M is used by tmpfs (/run/user/1000)
+    * 1,7G of 29G is used by 192.168.0.33:/home (/mnt/nfs/home)
+    * 1,7G of 29G is used by 192.168.0.33:/var/nfs (/mnt/nfs/var/nfs)
