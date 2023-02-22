@@ -1,4 +1,6 @@
-echo "* Filesystem"
+#!/bin/bash
+
+echo "* Filesystem (V1)"
 echo "  * Mountpoints"
 # $6 sind die Mountpoints
 df -h | sed -e '1d' | awk '{print "    * " $6}'

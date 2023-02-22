@@ -29,4 +29,4 @@ echo ""
 
 # Hier sollen die Informationen vom Speicher sei
 ./file-table.sh
-
+./file-detail.sh
