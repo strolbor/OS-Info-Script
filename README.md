@@ -2,22 +2,23 @@
 ## Aufgabe
 * Betriebssystem
   * via cat /etc/os-release
-  * [x]
+  * [x] erledigt
 * Anzahl CPU/Kerne
   * via lscpu
-  * [x]
+  * [x] erledigt
 * CPU Auslastung
   * via lscpu
-  * 
+  * [ ] erledigt
 * RAM Gesamt
   * via free -h
-  * [x]
+  * [x] erledigt
 * RAM Auslastung
   * free -h
-  * [x]
+  * [x] erledigt
 * Festplattenplatz
   * via df -h sehr gut machbar
-  * [x]
+  * [x] erledigt
 * Mountpoints (angehängte NFS Mountpoints)
   * via df -h sehr gut machbar
-  * [x]
+    * selbst NFS Mountpoints werden dargestellt.
+  * [x] erledigt

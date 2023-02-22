@@ -19,12 +19,23 @@ echo "* OS"
 # OS-Name
 cat /etc/os-release | grep "NAME" | head -n2 | tail -n1 | awk -F'=' '{print "  * The operating system is " $2}'
 
+echo ""
+
 echo "* CPU"
 # CPU-Anzahl
 lscpu | grep "Socket(s)" | head -n1 | awk '{print "  * CPU sockets: " $2}'
 lscpu | grep "CPU(s)" | head -n1 | awk '{print "  * CPU cores: " $2}'
 uptime -p | sed 's/up//g' |awk '{print "  * Uptime:"$0}'
- 
+
+
+top -b -n 1 |head -n1 | awk '{print "  * over the last 1 minute: "$10 }'
+top -b -n 1 |head -n1 | awk '{print "  * over the last 5 minute: "$11 }'
+top -b -n 1 |head -n1 | awk '{print "  * over the last 15 minute: "$12 }'
+
+
+
+
+
 echo ""
 
 
@@ -41,3 +52,5 @@ echo ""
 # Hier sollen die Informationen vom Speicher sei
 ./file-table.sh
 ./file-detail.sh
+
+
