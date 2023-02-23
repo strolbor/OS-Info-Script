@@ -50,7 +50,7 @@ echo "* CPU"
 lscpu | grep "Socket(s)" | awk '{print "  * CPU sockets: " $2}'
 lscpu | grep "CPU(s)" | head -n1 | awk '{print "  * CPU cores: " $2}'
 
-echo "  * CPU-load"
+echo "  * CPU-load:"
 
 echo $TOPDATA | awk -F 'average' '{print $2 }' | awk -F ' ' '{print $2}' | sed -e 's/ $//g' | sed -e 's/,$//g' | \
     sed  's/,/./g' | awk '{print "    * over the last 1 minute: " $1*100 "%"}'
