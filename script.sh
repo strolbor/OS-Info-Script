@@ -54,7 +54,7 @@ lscpu | grep "CPU(s)" | head -n1 | awk '{print "  * CPU cores: " $2}'
 
 echo "  * CPU-load"
 
-if [ -f top.tmp]
+if [[ -f "top.tmp" ]]
 then
     cat top.tmp | awk -F 'average' '{print $2 }' | awk -F ' ' '{print $2}' | sed -e 's/ $//g' | sed -e 's/,$//g' | \
         sed  's/,/./g' | awk '{print "    * over the last 1 minute: " $1*100 "%"}'
