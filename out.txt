@@ -7,30 +7,31 @@
 |_______||_______|       |___| |_|  |__||___|    |_______|
 
 * OS
-  * The operating system is "CentOS Linux 7 (Core)"
+  * The operating system pretty name is "CentOS Linux 7 (Core)"
+
+* Uptime
+  * Current: 3 hours, 30 minutes
 
 * CPU
   * CPU sockets: 1
   * CPU cores: 2
-  * Uptime: 4 hours, 15 minutes
-  * CPU-load
-    * over the last 1 minute: 0,00
-    * over the last 5 minute: 0,01
-    * over the last 15 minute: 0,05
+  * CPU-load:
+    * over the last 1 minute: 0%
+    * over the last 5 minute: 1%
+    * over the last 15 minute: 5%
 
 * RAM-Usage
-  * Mem: 226M of 1,8G is used. 
+  * Mem: 257M of 3,7G is used. 
   * Swap: 0B of 2,0G is used. 
 
-* Filesystem and Mountpoints (V2)
+* Filesystem and Mountpoints
   * Dateisystem             Größe Benutzt Verf. Verw% Eingehängt auf
-  * devtmpfs                 908M       0  908M    0% /dev
-  * tmpfs                    919M       0  919M    0% /dev/shm
-  * tmpfs                    919M    8,6M  911M    1% /run
-  * tmpfs                    919M       0  919M    0% /sys/fs/cgroup
-  * /dev/mapper/centos-root   29G    1,7G   28G    6% /
-  * /dev/sda1               1014M    181M  834M   18% /boot
-  * tmpfs                    184M       0  184M    0% /run/user/1000
-  * 192.168.0.33:/home        29G    1,7G   28G    6% /mnt/nfs/home
-  * 192.168.0.33:/var/nfs     29G    1,7G   28G    6% /mnt/nfs/var/nfs
-
+  * devtmpfs                 1,9G       0  1,9G    0% /dev
+  * tmpfs                    1,9G       0  1,9G    0% /dev/shm
+  * tmpfs                    1,9G    8,6M  1,9G    1% /run
+  * tmpfs                    1,9G       0  1,9G    0% /sys/fs/cgroup
+  * /dev/mapper/centos-root   29G    2,5G   27G    9% /
+  * /dev/sda1               1014M    194M  821M   20% /boot
+  * tmpfs                    379M       0  379M    0% /run/user/1000
+  * 192.168.0.33:/home        29G    2,5G   27G    9% /mnt/nfs/home
+  * 192.168.0.33:/var/nfs     29G    2,5G   27G    9% /mnt/nfs/var/nfs
