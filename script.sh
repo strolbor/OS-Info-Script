@@ -64,9 +64,9 @@ echo $TOPDA | awk -F 'average' '{print $2 }' | awk -F ' ' '{print $2}' | sed -e 
 # 2. sed letztes "," entfernen
 # 3. sed alle "," durch "." ersetzen
 # multiplizieren mit 100 um Prozentwert zu erhalten
-cat $TOPDA | awk -F 'average' '{print $2 }' | awk -F ' ' '{print $3}' | sed -e 's/ $//g' | sed -e 's/,$//g' | \
+echo $TOPDA | awk -F 'average' '{print $2 }' | awk -F ' ' '{print $3}' | sed -e 's/ $//g' | sed -e 's/,$//g' | \
     sed  's/,/./g' | awk '{print "    * over the last 5 minute: " $1*100 "%"}'
-cat $TOPDA | awk -F 'average' '{print $2 }' | awk -F ' ' '{print $4}' | sed -e 's/ $//g' | sed -e 's/,$//g' | \
+echo $TOPDA | awk -F 'average' '{print $2 }' | awk -F ' ' '{print $4}' | sed -e 's/ $//g' | sed -e 's/,$//g' | \
     sed  's/,/./g' | awk '{print "    * over the last 15 minute: " $1*100 "%"}'
 # $1 -> 1 Minute CPU-load
 # $2 -> 5 Minuten CPU-load
