@@ -46,20 +46,20 @@ top -b -n 1 -i | head -n1 > top.tmp
 # -i => top beginnt erst, wenn der cpu im idle ist
 # und abspeichern, damit weniger Zugriffszeit haben
 
+# top - 10:26:54 up  1:04,  1 user,  load average: 0,00, 0,01, 0,05
+# : 0,00, 0,01, 0,05
+# 1  2     3     4
 
-cat top.tmp | awk -F ':' '{print $4 }' | awk -F ' ' '{print $1}' | sed -e 's/ $//g' | sed -e 's/,$//g' | sed  's/,/./g' | awk '{print "    * over the last 1 minute: " $0*100 "%"}'
-# 1. awk => wir trennen bei ":", da diese immer gleich sind und erhalten die CPU infos
+
+cat top.tmp | awk -F 'average' '{print $2 }' | awk -F ' ' '{print $2}' | sed -e 's/ $//g' | sed -e 's/,$//g' | sed  's/,/./g' | awk '{print "    * over the last 1 minute: " $0*100 "%"}'
+# 1. awk => wir trennen bei "average", da diese immer gleich sind und erhalten die CPU infos
 # 2. awk => wir erhalten den ersten/zweiten/dritten Teil der zahlen folge, die von " " getrennt sind
 # 1. sed leerzeichen entfernen
 # 2. sed letztes "," entfernen
 # 3. sed alle "," durch "." ersetzen
 # multiplizieren mit 100 um Prozentwert zu erhalten
-cat top.tmp | awk -F ':' '{print $4 }' | awk -F ' ' '{print $2}' | sed -e 's/ $//g' | sed -e 's/,$//g' | sed  's/,/./g' | awk '{print "    * over the last 5 minute: " $0*100 "%"}'
-cat top.tmp | awk -F ':' '{print $4 }' | awk -F ' ' '{print $3}' | sed -e 's/ $//g' | sed -e 's/,$//g' | sed  's/,/./g' | awk '{print "    * over the last 15 minute: " $0*100 "%"}'
-
-
-# alt
-#cat top.tmp | awk '{print $11 }' | sed -e 's/ $//g' | sed -e 's/,$//g'  | sed  's/,/./g' | awk '{print "    * over the last 5 minute: " $0*100 "%"}'
+cat top.tmp | awk -F 'average' '{print $2 }' | awk -F ' ' '{print $3}' | sed -e 's/ $//g' | sed -e 's/,$//g' | sed  's/,/./g' | awk '{print "    * over the last 5 minute: " $0*100 "%"}'
+cat top.tmp | awk -F 'average' '{print $2 }' | awk -F ' ' '{print $4}' | sed -e 's/ $//g' | sed -e 's/,$//g' | sed  's/,/./g' | awk '{print "    * over the last 15 minute: " $0*100 "%"}'
 
 # temporäre Datei löschen
 rm -f top.tmp
