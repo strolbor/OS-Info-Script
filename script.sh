@@ -41,7 +41,8 @@ fi
 
 echo ""
 
-uptime -p | sed 's/up//g' | awk '{print "* Uptime:"$0}'
+echo "* Uptime"
+uptime -p | sed 's/up//g' | awk '{print "  * Current:"$0}'
 
 echo ""
 
