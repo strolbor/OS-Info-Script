@@ -15,7 +15,8 @@ echo "|_______||_______|       |___| |_|  |__||___|    |_______|"
 echo ""
 
 # Infosbereitstellen für CPU
-top -b -n 1 -i | head -n1 > top.tmp
+#top -b -n 1 -i | head -n1 > top.tmp
+TOPDA=top -b -n 1 -i | head -n1
 # -b => batch mode
 # -n x => x Anzahl der Aktualisierungen bevor top beendet wird
 # -i => top beginnt erst, wenn der cpu im idle ist
@@ -54,26 +55,23 @@ lscpu | grep "CPU(s)" | head -n1 | awk '{print "  * CPU cores: " $2}'
 
 echo "  * CPU-load"
 
-if [[ -f "top.tmp" ]]
-then
-    cat top.tmp | awk -F 'average' '{print $2 }' | awk -F ' ' '{print $2}' | sed -e 's/ $//g' | sed -e 's/,$//g' | \
-        sed  's/,/./g' | awk '{print "    * over the last 1 minute: " $1*100 "%"}'
-    # 1. awk => wir trennen bei "average", da diese immer gleich sind und erhalten die CPU infos
-    # 2. awk => wir erhalten den ersten/zweiten/dritten Teil der zahlen folge, die von " " getrennt sind
-    # 1. sed leerzeichen entfernen
-    # 2. sed letztes "," entfernen
-    # 3. sed alle "," durch "." ersetzen
-    # multiplizieren mit 100 um Prozentwert zu erhalten
-    cat top.tmp | awk -F 'average' '{print $2 }' | awk -F ' ' '{print $3}' | sed -e 's/ $//g' | sed -e 's/,$//g' | \
-        sed  's/,/./g' | awk '{print "    * over the last 5 minute: " $1*100 "%"}'
-    cat top.tmp | awk -F 'average' '{print $2 }' | awk -F ' ' '{print $4}' | sed -e 's/ $//g' | sed -e 's/,$//g' | \
-        sed  's/,/./g' | awk '{print "    * over the last 15 minute: " $1*100 "%"}'
-    # $1 -> 1 Minute CPU-load
-    # $2 -> 5 Minuten CPU-load
-    # $3 -> 15 Minuten CPU-load
-else 
-    echo "Harddisk not writeable"
-fi
+
+echo $TOPDA | awk -F 'average' '{print $2 }' | awk -F ' ' '{print $2}' | sed -e 's/ $//g' | sed -e 's/,$//g' | \
+    sed  's/,/./g' | awk '{print "    * over the last 1 minute: " $1*100 "%"}'
+# 1. awk => wir trennen bei "average", da diese immer gleich sind und erhalten die CPU infos
+# 2. awk => wir erhalten den ersten/zweiten/dritten Teil der zahlen folge, die von " " getrennt sind
+# 1. sed leerzeichen entfernen
+# 2. sed letztes "," entfernen
+# 3. sed alle "," durch "." ersetzen
+# multiplizieren mit 100 um Prozentwert zu erhalten
+cat $TOPDA | awk -F 'average' '{print $2 }' | awk -F ' ' '{print $3}' | sed -e 's/ $//g' | sed -e 's/,$//g' | \
+    sed  's/,/./g' | awk '{print "    * over the last 5 minute: " $1*100 "%"}'
+cat $TOPDA | awk -F 'average' '{print $2 }' | awk -F ' ' '{print $4}' | sed -e 's/ $//g' | sed -e 's/,$//g' | \
+    sed  's/,/./g' | awk '{print "    * over the last 15 minute: " $1*100 "%"}'
+# $1 -> 1 Minute CPU-load
+# $2 -> 5 Minuten CPU-load
+# $3 -> 15 Minuten CPU-load
+
 
 # temporäre Datei löschen
 rm -f top.tmp
