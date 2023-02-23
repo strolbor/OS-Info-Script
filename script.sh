@@ -72,6 +72,8 @@ then
     # $1 -> 1 Minute CPU-load
     # $2 -> 5 Minuten CPU-load
     # $3 -> 15 Minuten CPU-load
+else 
+    echo "Harddisk not writeable"
 fi
 
 # temporäre Datei löschen
