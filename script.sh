@@ -25,10 +25,10 @@ ARG1=${1:-0}
 
 if [ $ARG1 -gt 0 ]
 then
-    cat /etc/os-release | grep "ID" | head -n1 |  awk -F'=' '{print "  * The operating system id is " $2}'
-    cat /etc/os-release | grep "VERSION_ID" | head -n1 |  awk -F'=' '{print "  * The operating system version id is " $2}'
-    cat /etc/os-release | grep "ID_LIKE" | head -n1 |  awk -F'=' '{print "  * The operating system id_like is " $2}'
-    cat /etc/os-release | grep "HOME_URL" | head -n1 |  awk -F'=' '{print "  * The home_url ofoperating system is " $2}'
+    cat /etc/os-release | grep "ID" | head -n1 |  awk -F '=' '{print "  * The operating system id is " $2}'
+    cat /etc/os-release | grep "VERSION_ID" | head -n1 |  awk -F '=' '{print "  * The operating system version id is " $2}'
+    cat /etc/os-release | grep "ID_LIKE" | head -n1 |  awk -F '=' '{print "  * The operating system id_like is " $2}'
+    cat /etc/os-release | grep "HOME_URL" | head -n1 |  awk -F '=' '{print "  * The home_url ofoperating system is " $2}'
 fi
 # VERSION_ID
 echo ""
@@ -53,8 +53,9 @@ cat top.tmp | awk -F ':' '{print $4 }' | awk -F ' ' '{print $1}' | sed -e 's/ $/
 # 1. sed leerzeichen entfernen
 # 2. sed letztes "," entfernen
 # 3. sed alle "," durch "." ersetzen
-cat top.tmp | awk -F ':' '{print $4 }' | awk -F ' ' '{print $2}' | sed -e 's/ $//g' | sed -e 's/,$//g' | sed  's/,/./g' | awk '{print "    * over the last 1 minute: " $0*100 "%"}'
-cat top.tmp | awk -F ':' '{print $4 }' | awk -F ' ' '{print $3}' | sed -e 's/ $//g' | sed -e 's/,$//g' | sed  's/,/./g' | awk '{print "    * over the last 1 minute: " $0*100 "%"}'
+# multiplizieren mit 100 um Prozentwert zu erhalten
+cat top.tmp | awk -F ':' '{print $4 }' | awk -F ' ' '{print $2}' | sed -e 's/ $//g' | sed -e 's/,$//g' | sed  's/,/./g' | awk '{print "    * over the last 5 minute: " $0*100 "%"}'
+cat top.tmp | awk -F ':' '{print $4 }' | awk -F ' ' '{print $3}' | sed -e 's/ $//g' | sed -e 's/,$//g' | sed  's/,/./g' | awk '{print "    * over the last 15 minute: " $0*100 "%"}'
 
 
 # alt
