@@ -18,7 +18,6 @@ TOPDATA=$(top -b -n 1 -i | head -n1)
 # -n x => x Anzahl der Aktualisierungen bevor top beendet wird
 # -i => top beginnt erst, wenn der cpu im idle ist
 # und abspeichern als variable
-LSCPUDATA=$(lscpu)
 
 
 # Hier sollen die Informationen vom Betriebsystem sein
@@ -37,8 +36,8 @@ echo ""
 
 echo "* CPU"
 # CPU-Anzahl
-echo $LSCPUDATA | grep "Socket(s)" | awk '{print "  * CPU sockets: " $2}'
-echo $LSCPUDATA | grep "CPU(s)" | head -n1 | awk '{print "  * CPU cores: " $2}'
+lscpu | grep "Socket(s)" | awk '{print "  * CPU sockets: " $2}'
+lscpu | grep "CPU(s)" | head -n1 | awk '{print "  * CPU cores: " $2}'
 
 echo "  * CPU-load:"
 
