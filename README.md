@@ -10,7 +10,7 @@ Zu den Infos gehören:
   * Anzahl der Kerne
   * CPU-Auslastung
 * RAM-Nutzung
-* Harddisk-Drive Nutzung
+* Speicherplatz
 
 ## Skriptsprache
 Die Skriptsprache ist BASH bzw. SH.
