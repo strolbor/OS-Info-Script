@@ -18,9 +18,18 @@ echo "* OS"
 
 # OS-Name
 cat /etc/os-release | grep "NAME" | head -n2 | tail -n1 | awk -F'=' '{print "  * The operating system is " $2}'
-cat /etc/os-release | grep "ID" | head -n1 |  awk -F'=' '{print "  * The operating system id is " $2}'
-cat /etc/os-release | grep "VERSION_ID" | head -n1 |  awk -F'=' '{print "  * The operating system version id is " $2}'
+# ich benötige nur den pretty name
 
+# mehr infos mit nen extra argument >= 1
+ARG1=${1:-0}
+
+if [ $ARG1 -gt 0 ]
+then
+    cat /etc/os-release | grep "ID" | head -n1 |  awk -F'=' '{print "  * The operating system id is " $2}'
+    cat /etc/os-release | grep "VERSION_ID" | head -n1 |  awk -F'=' '{print "  * The operating system version id is " $2}'
+    cat /etc/os-release | grep "ID_LIKE" | head -n1 |  awk -F'=' '{print "  * The operating system id_like is " $2}'
+    cat /etc/os-release | grep "HOME_URL" | head -n1 |  awk -F'=' '{print "  * The home_url ofoperating system is " $2}'
+fi
 # VERSION_ID
 echo ""
 
@@ -28,26 +37,30 @@ echo "* CPU"
 # CPU-Anzahl
 lscpu | grep "Socket(s)" | head -n1 | awk '{print "  * CPU sockets: " $2}'
 lscpu | grep "CPU(s)" | head -n1 | awk '{print "  * CPU cores: " $2}'
-uptime -p | sed 's/up//g' |awk '{print "  * Uptime:"$0}'
+uptime -p | sed 's/up//g' | awk '{print "  * Uptime:"$0}'
 
 echo "  * CPU-load"
 top -b -n 1 -i | head -n1 > top.tmp
-cat top.tmp | awk '{print "    * over the last 1 minute: "$10 }' | sed -e 's/ $//g' | sed -e 's/,$//g' 
-# 1. sed leerzeichen entfernen
-# 2. sed , entfernen
-# 3. sed , durch . ersetzen
-cat top.tmp | awk '{print "    * over the last 5 minute: "$11 }' | sed -e 's/ $//g' | sed -e 's/,$//g'
-cat top.tmp | awk '{print "    * over the last 15 minute: "$12 }'
+# -b => batch mode
+# -n x => x Anzahl der Aktualisierungen bevor top beendet wird
+# -i => top beginnt erst, wenn der cpu im idle ist
+# und abspeichern, damit weniger Zugriffszeit haben
 
-#in Prozent
 
-cat top.tmp |head -n1 | awk '{print $10 }' | sed -e 's/ $//g' | sed -e 's/,$//g'  | sed  's/,/./g' | awk '{print "    * over the last 1 minute: " $0*100 "%"}'
+cat top.tmp | awk -F ':' '{print $4 }' | awk -F ' ' '{print $1}' | sed -e 's/ $//g' | sed -e 's/,$//g' | sed  's/,/./g' | awk '{print "    * over the last 1 minute: " $0*100 "%"}'
+cat top.tmp | awk -F ':' '{print $5 }' | awk -F ' ' '{print $1}' | sed -e 's/ $//g' | sed -e 's/,$//g' | sed  's/,/./g' | awk '{print "    * over the last 1 minute: " $0*100 "%"}'
+cat top.tmp | awk -F ':' '{print $6 }' | awk -F ' ' '{print $1}' | sed -e 's/ $//g' | sed -e 's/,$//g' | sed  's/,/./g' | awk '{print "    * over the last 1 minute: " $0*100 "%"}'
+# alt
+cat top.tmp | awk -F ':' '{print $4 }' | sed -e 's/ $//g' | sed -e 's/,$//g'  | sed  's/,/./g' | awk '{print "    * over the last 1 minute: " $0*100 "%"}'
+# head: wir benötigen nur die erste Zeile
 # 1. sed leerzeichen entfernen
-# 2. sed , entfernen
-# 3. sed , durch . ersetzen
-# dann multiplizieren für prozent
+# 2. sed letztes "," entfernen
+# 3. sed alle "," durch "." ersetzen
+# dann multiplizieren für Prozent und ausgeben mit awk
 cat top.tmp | awk '{print $11 }' | sed -e 's/ $//g' | sed -e 's/,$//g'  | sed  's/,/./g' | awk '{print "    * over the last 5 minute: " $0*100 "%"}'
 cat top.tmp | awk '{print $12 }' | sed -e 's/ $//g' | sed -e 's/,$//g'  | sed  's/,/./g' | awk '{print "    * over the last 15 minute: " $0*100 "%"}'
+
+# temporäre Datei löschen
 rm -f top.tmp
 
 echo ""
