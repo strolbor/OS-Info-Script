@@ -25,7 +25,7 @@ top -b -n 1 -i | head -n1 > top.tmp
 echo "* OS"
 
 # OS-Name
-cat /etc/os-release | grep "PRETTY_NAME" | awk -F'=' '{print "  * The operating system is " $2}'
+cat /etc/os-release | grep "PRETTY_NAME" | awk -F'=' '{print "  * The operating system pretty name is " $2}'
 # ich benötige nur den pretty name
 
 # mehr infos mit nen extra argument >= 1
@@ -33,12 +33,12 @@ ARG1=${1:-0}
 
 if [ $ARG1 -gt 0 ]
 then
-    cat /etc/os-release | grep "ID" | head -n1 | awk -F '=' '{print "  * The operating system id is " $2}'
+    cat /etc/os-release | grep "ID" | head -n1 | awk -F '=' '{print "  * The operating system id is " $2}' #hier wird head benötig, da mehrere einträge drin sind
     cat /etc/os-release | grep "VERSION_ID" | head -n1 | awk -F '=' '{print "  * The operating system version id is " $2}'
     cat /etc/os-release | grep "ID_LIKE" | head -n1 | awk -F '=' '{print "  * The operating system id_like is " $2}'
     cat /etc/os-release | grep "HOME_URL" | head -n1 | awk -F '=' '{print "  * The home_url ofoperating system is " $2}'
 fi
-# VERSION_ID
+
 echo ""
 
 echo "* CPU"
