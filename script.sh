@@ -16,7 +16,7 @@ echo ""
 
 # Infosbereitstellen für CPU
 #top -b -n 1 -i | head -n1 > top.tmp
-TOPDA=top -b -n 1 -i | head -n1
+TOPDA=$(top -b -n 1 -i | head -n1)
 # -b => batch mode
 # -n x => x Anzahl der Aktualisierungen bevor top beendet wird
 # -i => top beginnt erst, wenn der cpu im idle ist
