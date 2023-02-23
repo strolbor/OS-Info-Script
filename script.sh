@@ -48,17 +48,17 @@ top -b -n 1 -i | head -n1 > top.tmp
 
 
 cat top.tmp | awk -F ':' '{print $4 }' | awk -F ' ' '{print $1}' | sed -e 's/ $//g' | sed -e 's/,$//g' | sed  's/,/./g' | awk '{print "    * over the last 1 minute: " $0*100 "%"}'
-cat top.tmp | awk -F ':' '{print $5 }' | awk -F ' ' '{print $1}' | sed -e 's/ $//g' | sed -e 's/,$//g' | sed  's/,/./g' | awk '{print "    * over the last 1 minute: " $0*100 "%"}'
-cat top.tmp | awk -F ':' '{print $6 }' | awk -F ' ' '{print $1}' | sed -e 's/ $//g' | sed -e 's/,$//g' | sed  's/,/./g' | awk '{print "    * over the last 1 minute: " $0*100 "%"}'
-# alt
-cat top.tmp | awk -F ':' '{print $4 }' | sed -e 's/ $//g' | sed -e 's/,$//g'  | sed  's/,/./g' | awk '{print "    * over the last 1 minute: " $0*100 "%"}'
-# head: wir benötigen nur die erste Zeile
+# 1. awk => wir trennen bei ":", da diese immer gleich sind und erhalten die CPU infos
+# 2. awk => wir erhalten den ersten/zweiten/dritten Teil der zahlen folge, die von " " getrennt sind
 # 1. sed leerzeichen entfernen
 # 2. sed letztes "," entfernen
 # 3. sed alle "," durch "." ersetzen
-# dann multiplizieren für Prozent und ausgeben mit awk
-cat top.tmp | awk '{print $11 }' | sed -e 's/ $//g' | sed -e 's/,$//g'  | sed  's/,/./g' | awk '{print "    * over the last 5 minute: " $0*100 "%"}'
-cat top.tmp | awk '{print $12 }' | sed -e 's/ $//g' | sed -e 's/,$//g'  | sed  's/,/./g' | awk '{print "    * over the last 15 minute: " $0*100 "%"}'
+cat top.tmp | awk -F ':' '{print $4 }' | awk -F ' ' '{print $2}' | sed -e 's/ $//g' | sed -e 's/,$//g' | sed  's/,/./g' | awk '{print "    * over the last 1 minute: " $0*100 "%"}'
+cat top.tmp | awk -F ':' '{print $4 }' | awk -F ' ' '{print $3}' | sed -e 's/ $//g' | sed -e 's/,$//g' | sed  's/,/./g' | awk '{print "    * over the last 1 minute: " $0*100 "%"}'
+
+
+# alt
+#cat top.tmp | awk '{print $11 }' | sed -e 's/ $//g' | sed -e 's/,$//g'  | sed  's/,/./g' | awk '{print "    * over the last 5 minute: " $0*100 "%"}'
 
 # temporäre Datei löschen
 rm -f top.tmp
