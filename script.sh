@@ -13,11 +13,19 @@ echo "|       | _____| |       |   | | | |   ||   |    |       |"
 echo "|_______||_______|       |___| |_|  |__||___|    |_______|"
 echo ""
 
+# Infosbereitstellen für CPU
+top -b -n 1 -i | head -n1 > top.tmp
+# -b => batch mode
+# -n x => x Anzahl der Aktualisierungen bevor top beendet wird
+# -i => top beginnt erst, wenn der cpu im idle ist
+# und abspeichern, damit weniger Zugriffszeit haben
+
+
 # Hier sollen die Informationen vom Betriebsystem sein
 echo "* OS"
 
 # OS-Name
-cat /etc/os-release | grep "NAME" | head -n2 | tail -n1 | awk -F'=' '{print "  * The operating system is " $2}'
+cat /etc/os-release | grep "PRETTY_NAME" | awk -F'=' '{print "  * The operating system is " $2}'
 # ich benötige nur den pretty name
 
 # mehr infos mit nen extra argument >= 1
@@ -25,41 +33,37 @@ ARG1=${1:-0}
 
 if [ $ARG1 -gt 0 ]
 then
-    cat /etc/os-release | grep "ID" | head -n1 |  awk -F '=' '{print "  * The operating system id is " $2}'
-    cat /etc/os-release | grep "VERSION_ID" | head -n1 |  awk -F '=' '{print "  * The operating system version id is " $2}'
-    cat /etc/os-release | grep "ID_LIKE" | head -n1 |  awk -F '=' '{print "  * The operating system id_like is " $2}'
-    cat /etc/os-release | grep "HOME_URL" | head -n1 |  awk -F '=' '{print "  * The home_url ofoperating system is " $2}'
+    cat /etc/os-release | grep "ID" | head -n1 | awk -F '=' '{print "  * The operating system id is " $2}'
+    cat /etc/os-release | grep "VERSION_ID" | head -n1 | awk -F '=' '{print "  * The operating system version id is " $2}'
+    cat /etc/os-release | grep "ID_LIKE" | head -n1 | awk -F '=' '{print "  * The operating system id_like is " $2}'
+    cat /etc/os-release | grep "HOME_URL" | head -n1 | awk -F '=' '{print "  * The home_url ofoperating system is " $2}'
 fi
 # VERSION_ID
 echo ""
 
 echo "* CPU"
 # CPU-Anzahl
-lscpu | grep "Socket(s)" | head -n1 | awk '{print "  * CPU sockets: " $2}'
+lscpu | grep "Socket(s)" | awk '{print "  * CPU sockets: " $2}'
 lscpu | grep "CPU(s)" | head -n1 | awk '{print "  * CPU cores: " $2}'
 uptime -p | sed 's/up//g' | awk '{print "  * Uptime:"$0}'
 
 echo "  * CPU-load"
-top -b -n 1 -i | head -n1 > top.tmp
-# -b => batch mode
-# -n x => x Anzahl der Aktualisierungen bevor top beendet wird
-# -i => top beginnt erst, wenn der cpu im idle ist
-# und abspeichern, damit weniger Zugriffszeit haben
 
-# top - 10:26:54 up  1:04,  1 user,  load average: 0,00, 0,01, 0,05
-# : 0,00, 0,01, 0,05
-# 1  2     3     4
-
-
-cat top.tmp | awk -F 'average' '{print $2 }' | awk -F ' ' '{print $2}' | sed -e 's/ $//g' | sed -e 's/,$//g' | sed  's/,/./g' | awk '{print "    * over the last 1 minute: " $0*100 "%"}'
+cat top.tmp | awk -F 'average' '{print $2 }' | awk -F ' ' '{print $2}' | sed -e 's/ $//g' | sed -e 's/,$//g' | \
+    sed  's/,/./g' | awk '{print "    * over the last 1 minute: " $1*100 "%"}'
 # 1. awk => wir trennen bei "average", da diese immer gleich sind und erhalten die CPU infos
 # 2. awk => wir erhalten den ersten/zweiten/dritten Teil der zahlen folge, die von " " getrennt sind
 # 1. sed leerzeichen entfernen
 # 2. sed letztes "," entfernen
 # 3. sed alle "," durch "." ersetzen
 # multiplizieren mit 100 um Prozentwert zu erhalten
-cat top.tmp | awk -F 'average' '{print $2 }' | awk -F ' ' '{print $3}' | sed -e 's/ $//g' | sed -e 's/,$//g' | sed  's/,/./g' | awk '{print "    * over the last 5 minute: " $0*100 "%"}'
-cat top.tmp | awk -F 'average' '{print $2 }' | awk -F ' ' '{print $4}' | sed -e 's/ $//g' | sed -e 's/,$//g' | sed  's/,/./g' | awk '{print "    * over the last 15 minute: " $0*100 "%"}'
+cat top.tmp | awk -F 'average' '{print $2 }' | awk -F ' ' '{print $3}' | sed -e 's/ $//g' | sed -e 's/,$//g' | \
+    sed  's/,/./g' | awk '{print "    * over the last 5 minute: " $1*100 "%"}'
+cat top.tmp | awk -F 'average' '{print $2 }' | awk -F ' ' '{print $4}' | sed -e 's/ $//g' | sed -e 's/,$//g' | \
+    sed  's/,/./g' | awk '{print "    * over the last 15 minute: " $1*100 "%"}'
+# $1 -> 1 Minute CPU-load
+# $2 -> 5 Minuten CPU-load
+# $3 -> 15 Minuten CPU-load
 
 # temporäre Datei löschen
 rm -f top.tmp
