@@ -37,10 +37,11 @@ then
     cat /etc/os-release | grep "VERSION_ID" | head -n1 | awk -F '=' '{print "  * The operating system version id is " $2}'
     cat /etc/os-release | grep "ID_LIKE" | head -n1 | awk -F '=' '{print "  * The operating system id_like is " $2}'
     cat /etc/os-release | grep "HOME_URL" | head -n1 | awk -F '=' '{print "  * The home_url ofoperating system is " $2}'
-    echo ""
 fi
 
-uptime -p | sed 's/up//g' | awk '{print "  * Uptime:"$0}'
+echo ""
+
+uptime -p | sed 's/up//g' | awk '{print "* Uptime:"$0}'
 
 echo ""
 
