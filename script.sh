@@ -12,9 +12,6 @@ echo "|       | _____| |       |   | | | |   ||   |    |       |"
 echo "|_______||_______|       |___| |_|  |__||___|    |_______|"
 echo ""
 
-# mehr infos mit nen extra argument >= 1
-ARG1=${1:-0}
-
 # Infosbereitstellen für CPU
 TOPDATA=$(top -b -n 1 -i | head -n1)
 # -b => batch mode
