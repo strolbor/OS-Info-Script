@@ -53,9 +53,9 @@ echo $TOPDATA | awk -F 'average' '{print $2 }' | awk -F ' ' '{print $3}' | sed -
     sed  's/,/./g' | awk '{print "    * over the last 5 minute: " $1*100 "%"}'
 echo $TOPDATA | awk -F 'average' '{print $2 }' | awk -F ' ' '{print $4}' | sed -e 's/ $//g' | sed -e 's/,$//g' | \
     sed  's/,/./g' | awk '{print "    * over the last 15 minute: " $1*100 "%"}'
-# $1 -> 1 Minute CPU-load
-# $2 -> 5 Minuten CPU-load
-# $3 -> 15 Minuten CPU-load
+# $2 -> 1 Minute CPU-load
+# $3 -> 5 Minuten CPU-load
+# $4 -> 15 Minuten CPU-load
 
 echo ""
 
