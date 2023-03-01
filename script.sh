@@ -7,25 +7,22 @@
 # Banner anzeigen lassen
 #   0 => Nein
 #   1 => Ja
-showbanner=0
+showbanner=1
 
 
-
-if [[ $showbanner -eq 1 ]]; then
-    # kleiner Banner in ASCII Art
-    echo " _______  _______         ___   __    _  _______  _______ "
-    echo "|       ||       |       |   | |  |  | ||       ||       |"
-    echo "|   _   ||  _____| ____  |   | |   |_| ||    ___||   _   |"
-    echo "|  | |  || |_____ |____| |   | |       ||   |___ |  | |  |"
-    echo "|  |_|  ||_____  |       |   | |  _    ||    ___||  |_|  |"
-    echo "|       | _____| |       |   | | | |   ||   |    |       |"
-    echo "|_______||_______|       |___| |_|  |__||___|    |_______|"
+function bannerinfo ()
+{
+    if [[ $showbanner -eq 1 ]]; then
+        # kleiner Banner
+        echo ".---------."
+        echo "| OS-Info |"
+        echo "'---------'"
+    else
+        # Wenn man es nicht wünscht
+        echo "# OS-Info"
+    fi
     echo ""
-else
-    # Wenn man es nicht wünscht
-    echo "# OS-Info"
-    echo ""
-fi
+}
 
 function cpuinfo ()
 {
@@ -35,10 +32,14 @@ function cpuinfo ()
     # -n x => x Anzahl der Aktualisierungen bevor top beendet wird
     # -i => top beginnt erst, wenn der cpu im idle ist
     # und abspeichern als variable
+
     echo "* CPU"
+    
     # CPU-Anzahl
     lscpu | grep "Socket(s)" | awk '{print "  * CPU sockets: " $2}'
     lscpu | grep "CPU(s)" | head -n1 | awk '{print "  * CPU cores: " $2}'
+    # Wir benötigen wieder nur den 2. Teil des Strings.
+    # siehe osinfo erklärtext
 
     echo "  * CPU-load:"
 
@@ -57,7 +58,9 @@ function cpuinfo ()
         sed  's/,/./g' | awk '{print "    * over the last 5 minute: " $1*100 "%"}'
     echo $TOPDATA | awk -F 'average' '{print $2 }' | awk -F ' ' '{print $4}' | sed -e 's/ $//g' | sed -e 's/,$//g' | \
         sed  's/,/./g' | awk '{print "    * over the last 15 minute: " $1*100 "%"}'
-    echo ""
+    
+    
+    echo "" # End echo
 }
 
 
@@ -68,16 +71,23 @@ function osinfo ()
     # OS-Name
     cat /etc/os-release | grep "PRETTY_NAME" | awk -F'=' '{print "  * The operating system pretty name is " $2}'
     # ich benötige nur den pretty name
+    # und formatiert ausgeben. Dafür benötigen wir nur den 2. Teil des Strings
+    # PRETTY_NAME="CentOS Linux 7 (Core)"
+        # RRETTY_NAME => erster Teil
+        # "CentOS Linux 7 (Core)" => zweiter Teil
 
-    echo ""
+    echo "" # End echo
 }
 
 function uptimeinfo ()
 {
     echo "* Uptime"
     uptime -p | sed 's/up//g' | awk '{print "  * Current:" $0}'
+    # erst uptime erhalten
+    # dann up weg schneiden
+    # und formatiert ausgeben
 
-    echo ""
+    echo "" # End echo
 }
 
 function raminfo ()
@@ -87,29 +97,41 @@ function raminfo ()
     echo "* RAM-Usage"
 
     free -h | tail -n2 | awk '{print "  * "$1 " " $3 " of " $2 " is used. " }'
-    # '{print "  * The ram usage of " $1 " is " $3 " from total of " $2}'
+    # wir erhalten alle infos von free -h (human readable)
+    # dann benötigen wir nur die 2 letzten zeilen
+    # und geben es formatiert aus
+        # $1 => Name des Speichers
+        # $2 => total Platz auf dem Speichermedium
+        # §3 => grade benutzter Speicher auf dem Medium
 
-    echo ""
+    echo "" # End echo
 }
 
 function mntinfo ()
 {
     echo "* Filesystem and Mountpoints"
     df -h | awk '{print "  * " $0}'
-    echo ""
+
+    echo "" # End echo
 }
 
 
 function helpinfo ()
 {
-    echo "# Helpmenu"
-    echo ""
-    echo "* Usage:"
-    echo "  * $0"
-    echo "  * $0 cpu/ram/info/mnt/?"
-    echo "  * $0 cpu/ram/info/mnt cpu/ram/info/mnt"
-    echo ""
+    echo "* Helpmenu"
+    echo "  * Usage:"
+    echo "    * $0"
+    echo "    * $0 cpu/ram/info/mnt/?"
+    echo "    * $0 cpu/ram/info/mnt cpu/ram/info/mnt"
+    echo "" # End echo
+    exit 0
 }
+
+# Hauptprogramm
+    # Hier wird alles angezeigt
+
+# Banneranzeigen
+bannerinfo
 
 # Wenn Script gestartet wird, überprüfe, ob ich eingaben erhalte
 # Wenn nein, soll das hier passieren
@@ -123,30 +145,35 @@ fi
 
 # Wenn ich eingaben habe, prüfe, was sie sind und zeige es mir entsprechend an
 # Wenn $# == 0 => wird die schleife nie durchgelaufen
+
+# Setze i auf $# (|Args|) und rechne -1
 ((i=$# -1))
-while [[ $i -ge 0 ]]
+
+# Wenn i größer ist als 0, durchlaufe die Schleife
+# ("Rückwärtsschleife")
+while [[ $i -ge 0 ]] 
 do
-    case ${BASH_ARGV[$i]} in
-        "cpu")
+    # BASH_ARGV ist eine reverse Liste der eingebenen Argumente
+    # Deswegen müssen wir die Schleife auch rückwärts druchlaufen.
+    case ${BASH_ARGV[$i]} in # switch-Case
+        "cpu") #1
         cpuinfo
         ;;
-        "ram")
+        "ram") #2
         raminfo
         ;;
-        "up")
+        "up") #3
         uptimeinfo
         ;;
-        "mnt")
+        "mnt") #4
         mntinfo
         ;;
-        "os")
+        "os") #5
         osinfo
         ;;
-        *)
+        *) #6
         helpinfo
         ;;
     esac
-    #echo $i
-    #echo ${BASH_ARGV[$i]}
     ((i--))
 done
