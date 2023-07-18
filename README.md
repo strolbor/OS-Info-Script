@@ -1,4 +1,4 @@
-# TZ-OS-Info-Skript
+# OS-Info-Skript
 
 ## Ziel
 Mithilfe dieses Skriptes, sollen bestimmte Werte übersichtlich dargestellt werden.
@@ -21,15 +21,13 @@ Die Funktion des Skript wurde auf CentOS 7 getestet und dafür optimiert.
 ## Nutzung
 Für die normale Nutzung:
 ```bash
-  ./info.sh
+  ./script.sh
 ```
 
-Wenn man mehr Infos benötigt:
+Wenn man spezielle Infos benötigt:
 ```bash
-  ./info.sh 1
+  ./script.sh cpu/ram/info/mnt cpu/ram/info/mnt
 ``` 
-
-Wobei 1, auch durch eine beliebige Zahl größer 0 ersetzt werden kann.
 
 ## Aufgabe
 * Betriebssystem
