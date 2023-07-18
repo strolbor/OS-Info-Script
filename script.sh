@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Autor: Urs-Benedict Braun <urs-benedict.braun@dataport.de>
+# Autor: Urs-Benedict Braun 
 
 # Settings
 
